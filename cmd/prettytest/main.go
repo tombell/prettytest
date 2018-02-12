@@ -7,6 +7,13 @@ import (
 	"strings"
 )
 
+const (
+	reset  = "\033[30m"
+	red    = "\033[31m"
+	green  = "\033[32m"
+	yellow = "\033[33m"
+)
+
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -14,11 +21,14 @@ func main() {
 		line := scanner.Text()
 		trimmed := strings.TrimSpace(line)
 
-		c := "\033[0m"
+		c := reset
 
 		switch {
-		case strings.HasPrefix(trimmed, "?"):
-			c = "\033[33m"
+		// failure
+		case strings.HasPrefix(trimmed, "--- FAIL"):
+			fallthrough
+		case strings.HasPrefix(trimmed, "FAIL"):
+			c = red
 
 		// success
 		case strings.HasPrefix(trimmed, "--- PASS"):
@@ -26,13 +36,11 @@ func main() {
 		case strings.HasPrefix(trimmed, "ok"):
 			fallthrough
 		case strings.HasPrefix(trimmed, "PASS"):
-			c = "\033[32m"
+			c = green
 
-		// failure
-		case strings.HasPrefix(trimmed, "--- FAIL"):
-			fallthrough
-		case strings.HasPrefix(trimmed, "FAIL"):
-			c = "\033[31m"
+		// no test files
+		case strings.HasPrefix(trimmed, "?"):
+			c = yellow
 		}
 
 		fmt.Println(c + line + "\033[0m")
