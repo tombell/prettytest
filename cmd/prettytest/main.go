@@ -17,6 +17,9 @@ func main() {
 		c := "\033[0m"
 
 		switch {
+		case strings.HasPrefix(trimmed, "?"):
+			c = "\033[33m"
+
 		// success
 		case strings.HasPrefix(trimmed, "--- PASS"):
 			fallthrough
