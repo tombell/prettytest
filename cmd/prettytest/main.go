@@ -16,7 +16,7 @@ const (
 )
 
 func main() {
-	skip := flag.Bool("skip", false, "skip [no test files] in output")
+	verbose := flag.Bool("v", false, "include [no test files] in output")
 	flag.Parse()
 
 	scanner := bufio.NewScanner(os.Stdin)
@@ -44,7 +44,7 @@ func main() {
 
 		// no test files
 		case strings.HasSuffix(trimmed, "[no test files]"):
-			if *skip {
+			if !*verbose {
 				continue
 			}
 
