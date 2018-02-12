@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"os"
 	"strings"
@@ -15,34 +16,41 @@ const (
 )
 
 func main() {
+	skip := flag.Bool("skip", false, "skip [no test files] in output")
+	flag.Parse()
+
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for scanner.Scan() {
 		line := scanner.Text()
 		trimmed := strings.TrimSpace(line)
 
-		c := reset
+		color := reset
 
 		switch {
 		// failure
 		case strings.HasPrefix(trimmed, "--- FAIL"):
 			fallthrough
 		case strings.HasPrefix(trimmed, "FAIL"):
-			c = red
+			color = red
 
 		// success
-		case strings.HasPrefix(trimmed, "--- PASS"):
-			fallthrough
 		case strings.HasPrefix(trimmed, "ok"):
 			fallthrough
+		case strings.HasPrefix(trimmed, "--- PASS"):
+			fallthrough
 		case strings.HasPrefix(trimmed, "PASS"):
-			c = green
+			color = green
 
 		// no test files
-		case strings.HasPrefix(trimmed, "?"):
-			c = yellow
+		case strings.HasSuffix(trimmed, "[no test files]"):
+			if *skip {
+				continue
+			}
+
+			color = yellow
 		}
 
-		fmt.Println(c + line + "\033[0m")
+		fmt.Fprintf(os.Stderr, color+line+"\033[0m\n")
 	}
 }
