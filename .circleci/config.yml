@@ -1,0 +1,69 @@
+version: 2
+jobs:
+  # build cmd/prettytest
+  build:
+    docker:
+      - image: circleci/golang:1.9
+    working_directory: /go/src/github.com/tombell/prettytest
+    steps:
+      - checkout
+      - run: make dev
+
+  # build cmd/prettytest with VERSION set to git tag
+  build-release:
+    docker:
+      - image: circleci/golang:1.9
+    working_directory: /go/src/github.com/tombell/prettytest
+    steps:
+      - checkout
+      - run: |
+          VERSION="${CIRCLE_TAG}" make dist
+      - save_cache:
+          key: dist-{{ .Revision }}
+          paths:
+            - dist/
+
+  # run releasekit to generate release notes and attach build artifacts
+  release:
+    docker:
+      - image: circleci/golang:1.9
+    working_directory: /go/src/github.com/tombell/prettytest
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dist-{{ .Revision }}
+      - run: |
+          go get -u github.com/tombell/releasekit/cmd/releasekit
+          releasekit -t ${GITHUB_TOKEN} \
+                     -o tombell \
+                     -r prettytest \
+                     -p $(git tag | sort -V | tail -2 | head -1) \
+                     -n ${CIRCLE_TAG} \
+                     --attachment dist/prettytest-linux-amd64 \
+                     --attachment dist/prettytest-darwin-amd64 \
+
+workflows:
+  version: 2
+  build-n-release:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              ignore: /.*/
+      - build-release:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+      - release:
+          requires:
+            - build-release
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
