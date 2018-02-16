@@ -25,12 +25,12 @@ Pipe the output from running `go test` into `prettytest` to get the colorized
 output.
 
 
-    go test -v ./... | prettytest
+    go test ./... | prettytest
 
 This will filter out lines from the output that include `[no test files]` to
 keep the output simple. If you want to see this output, you can add the `-v`
 flag.
 
-    go test -v ./... | prettytest -v
+    go test ./... | prettytest -v
 
-That is all there is too it!
+That is all there is to it!
