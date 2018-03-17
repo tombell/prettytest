@@ -1,6 +1,6 @@
 # prettytest
 
-Adds color to the output of `go test` on macOS or Linux systems.
+Pipe output of `go test` to add color.
 
 ![prettytest](screenshot.png)
 
