@@ -1,17 +1,19 @@
 # prettytest
 
+[![CircleCI](https://circleci.com/gh/tombell/prettytest/tree/master.svg?style=svg)](https://circleci.com/gh/tombell/prettytest/tree/master)
+
 Pipe output of `go test` to add color.
 
 ## Installation
 
-To get the most up to date binaries, check [the releases][releases] for
-the pre-built binary for your system.
+To get the most up to date binaries, check [the releases][releases] for the
+pre-built binary for your system.
 
 You can also `go get` to install from source.
 
-    go get github.com/tombell/prettytest
+    go get -u github.com/tombell/prettytest/cmd/prettytest
 
-[releases]: https://github.com/tombell/coin/releases
+[releases]: https://github.com/tombell/prettytest/releases
 
 On macOS you can use [Homebrew](https://brew.sh) to install.
 
