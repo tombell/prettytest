@@ -2,8 +2,6 @@
 
 Pipe output of `go test` to add color.
 
-![prettytest](screenshot.png)
-
 ## Installation
 
 To get the most up to date binaries, check [the releases][releases] for
