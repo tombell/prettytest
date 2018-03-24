@@ -24,7 +24,6 @@ On macOS you can use [Homebrew](https://brew.sh) to install.
 Pipe the output from running `go test` into `prettytest` to get the colorized
 output.
 
-
     go test ./... | prettytest
 
 This will filter out lines from the output that include `[no test files]` to
