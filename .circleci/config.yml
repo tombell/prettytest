@@ -41,7 +41,7 @@ jobs:
                      -p $(git tag | sort -V | tail -2 | head -1) \
                      -n ${CIRCLE_TAG} \
                      --attachment dist/prettytest-linux-amd64 \
-                     --attachment dist/prettytest-darwin-amd64 \
+                     --attachment dist/prettytest-darwin-amd64
 
 workflows:
   version: 2
