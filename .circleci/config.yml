@@ -3,7 +3,7 @@ jobs:
   # build cmd/prettytest
   build:
     docker:
-      - image: circleci/golang:1.9
+      - image: circleci/golang:1.10.1
     working_directory: /go/src/github.com/tombell/prettytest
     steps:
       - checkout
@@ -12,7 +12,7 @@ jobs:
   # build cmd/prettytest with VERSION set to git tag
   build-release:
     docker:
-      - image: circleci/golang:1.9
+      - image: circleci/golang:1.10.1
     working_directory: /go/src/github.com/tombell/prettytest
     steps:
       - checkout
@@ -26,7 +26,7 @@ jobs:
   # run releasekit to generate release notes and attach build artifacts
   release:
     docker:
-      - image: circleci/golang:1.9
+      - image: circleci/golang:1.10.1
     working_directory: /go/src/github.com/tombell/prettytest
     steps:
       - checkout
