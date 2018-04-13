@@ -35,6 +35,8 @@ jobs:
             - dist-{{ .Revision }}
       - run: |
           go get -u github.com/tombell/releasekit/cmd/releasekit
+          go get -u github.com/tombell/brewer/cmd/brewer
+      - run: |
           releasekit -t ${GITHUB_TOKEN} \
                      -o tombell \
                      -r prettytest \
@@ -42,6 +44,16 @@ jobs:
                      -n ${CIRCLE_TAG} \
                      --attachment dist/prettytest-linux-amd64 \
                      --attachment dist/prettytest-darwin-amd64
+      - run: |
+          brewer --token ${GITHUB_TOKEN} \
+                 --owner tombell \
+                 --name homebrew-formulae \
+                 --formula Formula/prettytest.rb \
+                 --tag ${CIRCLE_TAG} \
+                 --revision ${CIRCLE_SHA1} \
+                 --commit-message "Update Formula/prettytest.rb to ${CIRCLE_TAG}" \
+                 --commit-author "Tom Bell" \
+                 --commit-email "tomb@tomb.io"
 
 workflows:
   version: 2
