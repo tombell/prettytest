@@ -13,12 +13,10 @@ all: dev
 clean:
 	rm -fr dist/
 
-dev: build
+dev:
+	go build ${LDFLAGS} -o dist/${BINARY} ${PACKAGE}
 
 dist: linux darwin
-
-build:
-	go build ${LDFLAGS} -o dist/${BINARY} ${PACKAGE}
 
 linux:
 	GOOS=linux GOARCH=${GOARCH} go build ${LDFLAGS} -o dist/${BINARY}-linux-${GOARCH} ${PACKAGE}
@@ -26,7 +24,4 @@ linux:
 darwin:
 	GOOS=darwin GOARCH=${GOARCH} go build ${LDFLAGS} -o dist/${BINARY}-darwin-${GOARCH} ${PACKAGE}
 
-windows:
-	@echo "This project is unsupported on Windows"
-
-.PHONY: all clean dev dist build linux darwin windows
+.PHONY: all clean dev dist linux darwin
