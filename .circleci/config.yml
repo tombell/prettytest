@@ -10,7 +10,7 @@ jobs:
     steps:
       - checkout
       - run: make test
-      - run: make circleci
+      - run: make cibuild
 
   # build cmd/prettytest with VERSION set to git tag
   build-release:
