@@ -1,11 +1,10 @@
-BINARY=prettytest
-GOARCH=amd64
-
 VERSION?=dev
 COMMIT=$(shell git rev-parse HEAD | cut -c -8)
 
 LDFLAGS=-ldflags "-X main.Version=${VERSION} -X main.Commit=${COMMIT}"
+MODFLAGS=-mod=vendor
 
+BINARY=prettytest
 PACKAGE=./cmd/prettytest
 
 all: dev
@@ -16,12 +15,18 @@ clean:
 dev:
 	go build ${LDFLAGS} -o dist/${BINARY} ${PACKAGE}
 
+cibuild:
+	go build ${MODFLAGS} ${LDFLAGS} -o dist/${BINARY} ${PACKAGE}
+
 dist: linux darwin
 
-linux:
-	GOOS=linux GOARCH=${GOARCH} go build ${LDFLAGS} -o dist/${BINARY}-linux-${GOARCH} ${PACKAGE}
-
 darwin:
-	GOOS=darwin GOARCH=${GOARCH} go build ${LDFLAGS} -o dist/${BINARY}-darwin-${GOARCH} ${PACKAGE}
+	GOOS=darwin GOARCH=amd64 go build ${LDFLAGS} -o dist/${BINARY}-darwin-amd64 ${PACKAGE}
 
-.PHONY: all clean dev dist linux darwin
+linux:
+	GOOS=linux GOARCH=amd64 go build ${LDFLAGS} -o dist/${BINARY}-linux-amd64 ${PACKAGE}
+
+test:
+	go test ${MODFLAGS} ./...
+
+.PHONY: all clean dev cibuild dist darwin linux test
