@@ -13,12 +13,9 @@ clean:
 	rm -fr dist/
 
 dev:
-	go build ${LDFLAGS} -o dist/${BINARY} ${PACKAGE}
-
-cibuild:
 	go build ${MODFLAGS} ${LDFLAGS} -o dist/${BINARY} ${PACKAGE}
 
-dist: linux darwin
+dist: darwin linux
 
 darwin:
 	GOOS=darwin GOARCH=amd64 go build ${LDFLAGS} -o dist/${BINARY}-darwin-amd64 ${PACKAGE}
@@ -29,4 +26,4 @@ linux:
 test:
 	go test ${MODFLAGS} ./...
 
-.PHONY: all clean dev cibuild dist darwin linux test
+.PHONY: all clean dev dist darwin linux test
