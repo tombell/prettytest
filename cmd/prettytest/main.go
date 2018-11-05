@@ -51,6 +51,6 @@ func main() {
 			color = yellow
 		}
 
-		fmt.Fprintf(os.Stderr, color+line+"\033[0m\n")
+		fmt.Fprintln(os.Stderr, color+line+"\033[0m")
 	}
 }
