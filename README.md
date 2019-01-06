@@ -1,7 +1,5 @@
 # prettytest
 
-[![CircleCI](https://circleci.com/gh/tombell/prettytest/tree/master.svg?style=svg)](https://circleci.com/gh/tombell/prettytest/tree/master)
-
 Pipe output of `go test` to add color.
 
 ## Installation
