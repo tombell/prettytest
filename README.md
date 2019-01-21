@@ -7,11 +7,11 @@ Pipe output of `go test` to add color.
 To get the most up to date binaries, check [the releases][releases] for the
 pre-built binary for your system.
 
+[releases]: https://github.com/tombell/prettytest/releases
+
 You can also `go get` to install from source.
 
     go get -u github.com/tombell/prettytest/cmd/prettytest
-
-[releases]: https://github.com/tombell/prettytest/releases
 
 On macOS you can use [Homebrew](https://brew.sh) to install.
 
@@ -29,5 +29,3 @@ keep the output simple. If you want to see this output, you can add the `-v`
 flag.
 
     go test ./... | prettytest -v
-
-That is all there is to it!
