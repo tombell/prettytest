@@ -1,7 +1,7 @@
 VERSION?=dev
 COMMIT=$(shell git rev-parse HEAD | cut -c -8)
 
-LDFLAGS=-ldflags "-X main.Version=${VERSION} -X main.Commit=${COMMIT}"
+LDFLAGS=-ldflags "-X main.version=${VERSION} -X main.commit=${COMMIT}"
 MODFLAGS=-mod=vendor
 
 PLATFORMS:=darwin linux
@@ -22,4 +22,4 @@ $(PLATFORMS):
 test:
 	go test ${MODFLAGS} ./...
 
-.PHONY: all clean dev dist darwin linux test
+.PHONY: all clean dev dist $(PLATFORMS) test
