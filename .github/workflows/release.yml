@@ -45,7 +45,6 @@ jobs:
                                -n "$(basename ${GITHUB_REF})" \
                                --attachment dist/prettytest-linux-amd64 \
                                --attachment dist/prettytest-darwin-amd64 \
-                               --attachment dist/prettytest-windows-amd64
     - name: Update Homebrew formula
       env:
         FORMULA_GITHUB_TOKEN: ${{ secrets.FORMULA_GITHUB_TOKEN }}
